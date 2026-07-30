@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import { createServer as createViteServer } from 'vite';
 import { requireAuth, optionalAuth, AuthRequest } from './src/middleware/auth';
 import {
   getUserProducts,
@@ -112,11 +111,13 @@ app.patch('/api/products/:id/volume', requireAuth, async (req: AuthRequest, res)
 // Standalone server initialization (when not running on Vercel)
 if (!process.env.VERCEL) {
   if (process.env.NODE_ENV !== 'production') {
-    createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    }).then((vite) => {
-      app.use(vite.middlewares);
+    import('vite').then(({ createServer: createViteServer }) => {
+      createViteServer({
+        server: { middlewareMode: true },
+        appType: 'spa',
+      }).then((vite) => {
+        app.use(vite.middlewares);
+      });
     });
   } else {
     const distPath = path.join(process.cwd(), 'dist');

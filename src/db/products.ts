@@ -1,8 +1,8 @@
-import { db } from './index.ts';
-import { products } from './schema.ts';
+import { db } from './index';
+import { products } from './schema';
 import { eq, and, desc } from 'drizzle-orm';
-import { SavedProduct } from '../types.ts';
-import { getOrCreateUser } from './users.ts';
+import { SavedProduct } from '../types';
+import { getOrCreateUser } from './users';
 
 export async function getUserProducts(userUid: string): Promise<SavedProduct[]> {
   try {
