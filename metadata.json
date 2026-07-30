@@ -1,0 +1,6 @@
+{
+  "name": "Kalkulator HPP & Margin Usaha Kuliner",
+  "description": "Kalkulator HPP (Harga Pokok Penjualan) & Margin Keuntungan Usaha Kuliner dan UMKM. Mendukung perhitungan modal per batch adonan, bahan baku, pengemasan, gas, dan harga jual.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
