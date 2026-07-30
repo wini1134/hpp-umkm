@@ -23,22 +23,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+
     try {
       const unsubscribe = onAuthStateChanged(
         auth,
         (currentUser) => {
           setUser(currentUser);
           setLoading(false);
+          clearTimeout(timer);
         },
         (error) => {
           console.warn('Firebase auth state error:', error);
           setLoading(false);
+          clearTimeout(timer);
         }
       );
-      return () => unsubscribe();
+      return () => {
+        clearTimeout(timer);
+        unsubscribe();
+      };
     } catch (err) {
       console.warn('Failed to subscribe to auth state:', err);
       setLoading(false);
+      clearTimeout(timer);
     }
   }, []);
 
