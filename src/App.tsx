@@ -8,7 +8,8 @@ import { PlatformComparison } from './components/PlatformComparison';
 import { SavedProducts } from './components/SavedProducts';
 import { GlossaryModal } from './components/GlossaryModal';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { Database, CloudCheck, RefreshCw } from 'lucide-react';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { Database, CheckCircle2, RefreshCw } from 'lucide-react';
 
 const LOCAL_STORAGE_KEY = 'ecommerce_profit_calc_saved_v1';
 
@@ -231,7 +232,7 @@ function AppContent() {
               </span>
             ) : (
               <span className="flex items-center space-x-1 text-emerald-600 dark:text-emerald-400 font-medium">
-                <CloudCheck className="w-3.5 h-3.5" />
+                <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Tersinkronisasi</span>
               </span>
             )}
@@ -297,8 +298,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
