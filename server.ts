@@ -1,13 +1,13 @@
 import express from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
-import { requireAuth, optionalAuth, AuthRequest } from './src/middleware/auth.ts';
+import { requireAuth, optionalAuth, AuthRequest } from './src/middleware/auth';
 import {
   getUserProducts,
   saveUserProduct,
   deleteUserProduct,
   updateUserProductVolume,
-} from './src/db/products.ts';
+} from './src/db/products';
 
 const app = express();
 
