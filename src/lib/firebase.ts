@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, Auth } from 'firebase/auth';
 
 const config = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyDummyKeyForFallback123456789',
@@ -10,6 +10,21 @@ const config = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:1044300725151:web:335f02edb69081e11d1baa',
 };
 
-const app = !getApps().length ? initializeApp(config) : getApp();
-export const auth = getAuth(app);
+let app;
+try {
+  app = !getApps().length ? initializeApp(config) : getApp();
+} catch (e) {
+  console.warn('Firebase init failed:', e);
+}
+
+let authInstance: Auth | null = null;
+try {
+  if (app) {
+    authInstance = getAuth(app);
+  }
+} catch (e) {
+  console.warn('Firebase getAuth failed:', e);
+}
+
+export const auth = authInstance as Auth;
 export const googleAuthProvider = new GoogleAuthProvider();

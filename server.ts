@@ -111,11 +111,12 @@ app.patch('/api/products/:id/volume', requireAuth, async (req: AuthRequest, res)
 // Standalone server initialization (when not running on Vercel)
 if (!process.env.VERCEL) {
   if (process.env.NODE_ENV !== 'production') {
-    import('vite').then(({ createServer: createViteServer }) => {
+    const viteModule = 'vite';
+    import(/* @vite-ignore */ viteModule).then(({ createServer: createViteServer }) => {
       createViteServer({
         server: { middlewareMode: true },
         appType: 'spa',
-      }).then((vite) => {
+      }).then((vite: any) => {
         app.use(vite.middlewares);
       });
     });

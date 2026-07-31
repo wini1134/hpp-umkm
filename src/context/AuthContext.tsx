@@ -28,6 +28,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, 1500);
 
     try {
+      if (!auth) {
+        setLoading(false);
+        clearTimeout(timer);
+        return;
+      }
       const unsubscribe = onAuthStateChanged(
         auth,
         (currentUser) => {
